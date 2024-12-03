@@ -21,23 +21,13 @@
 
 
 module demux1_8using1_4(input in, input [2:0] sel, output [7:0] y);
-    wire [3:0] temp;
-
-    demux1_4 first_demux(
-        .in(in),
-        .sel(sel[2:1]),
-        .y(temp)
-    );
-
-    demux1_4 lower_demux(
-        .in(temp[0]),
-        .sel(sel[0]),
-        .y(y[3:0])
-    );
-
-    demux1_4 upper_demux(
-        .in(temp[1]),
-        .sel(sel[0]),
-        .y(y[7:4])
-    );
-endmodule
+    wire enable_lower,enable_upper;
+    assign enable_lower=~sel[2];
+    assign enable_upper=sel[2];
+    demux1_4 lower(.in(in & enable_lower),
+                   .sel(sel[1:0]),
+                   .y(y[3:0]));
+        demux1_4 upper(.in(in & enable_upper),
+                   .sel(sel[1:0]),
+                   .y(y[7:4]));
+   endmodule
