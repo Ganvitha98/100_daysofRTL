@@ -18,7 +18,7 @@
 // Additional Comments:
 // 
 //////////////////////////////////////////////////////////////////////////////////
-module demux1_4(input in, input [1:0] sel, output reg [3:0] y);
+/*module demux1_4(input in, input [1:0] sel, output reg [3:0] y);
     always @(*) begin
         y= 4'b0000;
         case (sel)
@@ -28,4 +28,11 @@ module demux1_4(input in, input [1:0] sel, output reg [3:0] y);
             2'd3: y[3] = in;
         endcase
     end
+endmodule*/
+
+module demux1_4(input in, input [1:0]sel, output  [3:0] y);
+assign y[0]=in & ~sel[1] & ~sel[0];
+assign y[1]=in & sel[1] & ~sel[0];
+assign y[2]=in & sel[1] & ~sel[0];
+assign y[3]=in & sel[1] & sel[0];
 endmodule
